@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <title>Upload</title>
@@ -18,10 +18,11 @@
             uppload a file
         </h2>
 
-        <form method="POST" action="/upload">
+        <form method="POST" action="${destination}" enctype="multipart/form-data">
 
             <div>
-                <input hidden type="text" name="token" id="token" size="40" value="${fn:escapeXml(file.author)}" class="form-control" />
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" size="100" value="${fn:escapeXml(file.author)}">
             </div>
 
             <div>
