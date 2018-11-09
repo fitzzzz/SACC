@@ -1,17 +1,17 @@
-package fr.si5.cc.td1;
+package fr.si5.cc.td1.users;
 
 public class User {
 
     private String login;
     private String password;
-    private int    level;
-    private int    dataUploaded;
-    private int    currentUsage;
+    private long    level;
+    private long    dataUploaded;
+    private long    currentUsage;
 
 
     public User() {}
 
-    public User(String login, String password, int level, int dataUploaded, int currentUsage) {
+    public User(String login, String password, long level, long dataUploaded, long currentUsage) {
         this.login = login;
         this.password = password;
         this.level = level;
@@ -36,28 +36,28 @@ public class User {
         this.password = password;
     }
 
-    public int getLevel() {
+    public long getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(long level) {
         this.level = level;
     }
 
-    public int getDataUploaded() {
+    public long getDataUploaded() {
         return dataUploaded;
     }
 
-    public void setDataUploaded(int dataUploaded) {
+    public void setDataUploaded(long dataUploaded) {
         this.dataUploaded = dataUploaded;
     }
 
-    public int getCurrentUsage() {
+    public long getCurrentUsage() {
         return currentUsage;
     }
 
-    public void setCurrentUsage(int currentUsage) {
+    public void setCurrentUsage(long currentUsage) {
         this.currentUsage = currentUsage;
     }
-    
+
 }
