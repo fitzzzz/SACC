@@ -9,9 +9,9 @@ public class UserDao {
 
     private String login;
     private String password;
-    private int    level;
-    private int    dataUploaded;
-    private int    currentUsage;
+    private int level;
+    private int dataUploaded;
+    private int currentUsage;
 
     public static final String LOGIN_FIELD = "login";
     public static final String PASSWORD_FIELD = "password";
@@ -24,7 +24,7 @@ public class UserDao {
     private final DatastoreService datastore;
 
     public UserDao() {
-        datastore =  DatastoreServiceFactory.getDatastoreService();
+        datastore = DatastoreServiceFactory.getDatastoreService();
     }
 
     public Entity persistUser(User user) {
@@ -46,6 +46,16 @@ public class UserDao {
         Query query = new Query(USER_KIND);
         UserEntityTranslator translator = new UserEntityTranslator();
         return translator.translate(datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()));
+    }
+
+    public User getUserByLogin(String login) {
+        Query query = new Query(USER_KIND);
+        UserEntityTranslator translator = new UserEntityTranslator();
+        List<User> users = translator.translate(datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()));
+        for (User user : users) {
+            if (user.getLogin().equals(login)) return user;
+        }
+        return null;
     }
 
 }

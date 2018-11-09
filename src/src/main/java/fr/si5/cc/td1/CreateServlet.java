@@ -9,6 +9,10 @@ import com.google.cloud.storage.Acl.Role;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import fr.si5.cc.td1.files.File;
+import fr.si5.cc.td1.files.FileDao;
+import fr.si5.cc.td1.users.User;
+import fr.si5.cc.td1.users.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -29,6 +33,8 @@ public class CreateServlet extends HttpServlet {
 
     private static final Storage storage;
     private static final String BUCKET_NAME = "projet-sacc-bucket";
+    private UserDao userDao = new UserDao();
+    private FileDao fileDao = new FileDao();
 
     static {
         storage = StorageOptions.getDefaultInstance().getService();
@@ -47,24 +53,18 @@ public class CreateServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
-//        BookDao dao = (BookDao) this.getServletContext().getAttribute("dao");
-//        Book book = new Book.Builder()
-//                .author(req.getParameter("author"))   // form parameter
-//                .description(req.getParameter("description"))
-//                .publishedDate(req.getParameter("publishedDate"))
-//                .title(req.getParameter("title"))
-//                .imageUrl(null)
-//                .build();
-//        try {
-//            Long id = dao.createBook(book);
-//            resp.sendRedirect("/read?id=" + id.toString());   // read what we just wrote
-//        } catch (Exception e) {
-//            throw new ServletException("Error creating book", e);
-//        }
-        Part filePart = req.getPart("file");
+        String email = req.getParameter("email");
+        User user = userDao.getUserByLogin(email);
+        if (user == null) {
+            resp.sendError(400, "User does not exists.");
+        } else {
+            Part filePart = req.getPart("file");
 
-        String link = this.uploadFile(filePart);
-        resp.sendRedirect("/read/=?" + link);
+            String link = this.uploadFile(filePart);
+            fileDao.save(new File(user.getLogin(), filePart.getName(), link));
+            resp.sendRedirect("/");
+        }
+
     }
 
 
