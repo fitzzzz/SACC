@@ -2,7 +2,7 @@ package fr.si5.cc.td1.files;
 
 import com.google.appengine.api.datastore.*;
 import fr.si5.cc.td1.users.User;
-import fr.si5.cc.td1.users.FileEntityTranslator;
+import fr.si5.cc.td1.users.UserEntityTranslator;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class FileDao {
 
     public List<User> findAll() {
         Query query = new Query(FILE);
-        FileEntityTranslator translator = new FileEntityTranslator();
+        UserEntityTranslator translator = new UserEntityTranslator();
         return translator.translate(datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()));
     }
 
