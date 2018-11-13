@@ -54,7 +54,7 @@ public class UserDao {
         userEntity.setProperty(CURRENT_USAGE_FIELD, user.getCurrentUsage());
         datastore.put(userEntity);
     }
-    
+
     private Entity getUseEntityByLogin(String login) {
         Query query = new Query(USER_KIND);
         List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
