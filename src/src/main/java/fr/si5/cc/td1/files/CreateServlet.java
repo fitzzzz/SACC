@@ -25,16 +25,9 @@ import java.util.Arrays;
 @WebServlet(name = "CreateServlet", value = "/create")
 public class CreateServlet extends HttpServlet {
 
-
-    private static final Storage storage;
-    private static final String BUCKET_NAME = "projet-sacc-bucket";
     private UserDao userDao = new UserDao();
     private FileDao fileDao = new FileDao();
 
-    static {
-        storage = StorageOptions.getDefaultInstance().getService();
-
-    }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -60,7 +53,7 @@ public class CreateServlet extends HttpServlet {
             if (filePart == null) {
                 resp.sendError(400, "thing to upload.");
             }
-            String link = this.uploadFile(filePart);
+            String link = FileStorage.getInstance().uploadFile(filePart);
             fileDao.save(new File(user.getLogin(), filePart.getSubmittedFileName(), link));
             user.addUpload(filePart.getSize());
             resp.sendRedirect("/");
@@ -69,25 +62,6 @@ public class CreateServlet extends HttpServlet {
     }
 
 
-    /**
-     * Uploads a file to Google Cloud Storage to the bucket specified in the BUCKET_NAME
-     * environment variable, appending a timestamp to end of the uploaded filename.
-     */
-    @SuppressWarnings("deprecation")
-    private String uploadFile(Part filePart) throws IOException {
-        final String fileName = filePart.getSubmittedFileName() + DateTime.now().toString();
 
-        // the inputstream is closed by default, so we don't need to close it here
-        BlobInfo blobInfo =
-                storage.create(
-                        BlobInfo
-                                .newBuilder(CreateServlet.BUCKET_NAME, fileName)
-                                // Modify access list to allow all users with link to read file
-                                .setAcl(new ArrayList<>(Arrays.asList(Acl.of(Acl.User.ofAllUsers(), Role.READER))))
-                                .build(),
-                        filePart.getInputStream());
-        // return the public download link
-        return blobInfo.getMediaLink();
-    }
 
 }
