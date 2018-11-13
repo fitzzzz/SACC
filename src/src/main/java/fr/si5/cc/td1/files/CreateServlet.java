@@ -1,18 +1,13 @@
-package fr.si5.cc.td1;
+package fr.si5.cc.td1.files;
 
-import com.google.appengine.repackaged.org.joda.time.DateTime;
-import com.google.appengine.repackaged.org.joda.time.DateTimeZone;
-import com.google.appengine.repackaged.org.joda.time.format.DateTimeFormat;
-import com.google.appengine.repackaged.org.joda.time.format.DateTimeFormatter;
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Acl.Role;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import fr.si5.cc.td1.files.File;
-import fr.si5.cc.td1.files.FileDao;
 import fr.si5.cc.td1.users.User;
 import fr.si5.cc.td1.users.UserDao;
+import org.joda.time.DateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -45,7 +40,7 @@ public class CreateServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         req.setAttribute("action", "Create");          // Part of the Header in form.jsp
-        req.setAttribute("destination", "/create");  // The urlPattern to invoke (this Servlet)
+        req.setAttribute("destination", "http://projet-sacc-si5.appspot.com/create");  // The urlPattern to invoke (this Servlet)
 //        req.setAttribute("page", "form");           // Tells base.jsp to include form.jsp
         req.getRequestDispatcher("WEB-INF/template/create.jsp").forward(req, resp);
     }
@@ -53,6 +48,8 @@ public class CreateServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setCharacterEncoding("utf-8");
         String email = req.getParameter("email");
         User user = userDao.getUserByLogin(email);
         if (user == null) {
@@ -60,8 +57,11 @@ public class CreateServlet extends HttpServlet {
         } else {
             Part filePart = req.getPart("file");
 
+            if (filePart == null) {
+                resp.sendError(400, "thing to upload.");
+            }
             String link = this.uploadFile(filePart);
-            fileDao.save(new File(user.getLogin(), filePart.getName(), link));
+            fileDao.save(new File(user.getLogin(), filePart.getSubmittedFileName(), link));
             resp.sendRedirect("/");
         }
 
@@ -74,10 +74,7 @@ public class CreateServlet extends HttpServlet {
      */
     @SuppressWarnings("deprecation")
     private String uploadFile(Part filePart) throws IOException {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("-YYYY-MM-dd-HHmmssSSS");
-        DateTime dt = DateTime.now(DateTimeZone.UTC);
-        String dtString = dt.toString(dtf);
-        final String fileName = filePart.getSubmittedFileName() + dtString;
+        final String fileName = filePart.getSubmittedFileName() + DateTime.now().toString();
 
         // the inputstream is closed by default, so we don't need to close it here
         BlobInfo blobInfo =
