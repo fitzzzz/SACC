@@ -61,16 +61,6 @@ public class User {
         this.currentUsage = currentUsage;
     }
 
-    public long incrementCurrentUsage() {
-        currentUsage++;
-        return currentUsage;
-    }
-
-    public long descrementCurrentUsage() {
-        currentUsage--;
-        return currentUsage;
-    }
-
     public void addUpload(Long size) {
         this.dataUploaded += (size / 1000000);
         if (dataUploaded > 201) {
