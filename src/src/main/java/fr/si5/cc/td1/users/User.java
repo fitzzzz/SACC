@@ -60,4 +60,14 @@ public class User {
         this.currentUsage = currentUsage;
     }
 
+    public long incrementCurrentUsage() {
+        currentUsage++;
+        return currentUsage;
+    }
+
+    public long descrementCurrentUsage() {
+        currentUsage--;
+        return currentUsage;
+    }
+
 }
