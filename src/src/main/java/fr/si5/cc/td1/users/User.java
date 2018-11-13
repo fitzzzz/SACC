@@ -62,12 +62,12 @@ public class User {
     }
 
     public void addUpload(Long size) {
-        this.currentUsage += (size / 1000000);
-        if (currentUsage > 201) {
+        this.dataUploaded += (size / 1000000);
+        if (dataUploaded > 201) {
             this.level = 2;
             return;
         }
-        if (currentUsage > 100) {
+        if (dataUploaded > 100) {
             this.level = 1;
             return;
         }
