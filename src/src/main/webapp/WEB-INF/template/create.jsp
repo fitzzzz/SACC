@@ -5,9 +5,9 @@
   Time: 14:54
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>--%>
 <html>
 <head>
     <title>Upload</title>
@@ -22,15 +22,17 @@
 
             <div>
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" size="100" value="${fn:escapeXml(file.author)}">
+                <%--<input type="text" name="email" id="email" size="100" value="${fn:escapeXml(file.author)}">--%>
+                <input type="text" name="email" id="email" size="100" value="${file.author}">
             </div>
 
             <div>
                 <label for="file">Post content</label>
-                <input id="file" type="file" name="file" accept="*" value="${fn:escapeXml(file.content)}"/>
+                <input id="file" type="file" name="file" accept="*" value="${file.content}"/>
+                <%--<input id="file" type="file" name="file" accept="*" value="${fn:escapeXml(file.content)}"/>--%>
             </div>
 
-            <button type="submit">Save</button>
+            <button type="submit">Upload</button>
         </form>
     </div>
 </head>
