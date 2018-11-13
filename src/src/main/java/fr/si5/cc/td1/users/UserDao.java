@@ -58,6 +58,13 @@ public class UserDao {
         return null;
     }
 
+    public List<User> getUsersOrderByScore() {
+        Query query = new Query(USER_KIND);
+        query.addSort(DATA_UPLOADED_FIELD, Query.SortDirection.DESCENDING);
+        UserEntityTranslator translator = new UserEntityTranslator();
+        return translator.translate(datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()));
+    }
+
     public void clear() {
         Query query = new Query(USER_KIND);
         datastore.prepare(query).asList(FetchOptions.Builder.withDefaults())
