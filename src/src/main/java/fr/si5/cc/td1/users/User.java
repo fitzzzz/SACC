@@ -72,4 +72,14 @@ public class User {
             return;
         }
     }
+    public long incrementCurrentUsage() {
+        currentUsage++;
+        return currentUsage;
+    }
+
+    public long descrementCurrentUsage() {
+        currentUsage--;
+        return currentUsage;
+    }
+
 }
