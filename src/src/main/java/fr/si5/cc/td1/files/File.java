@@ -3,15 +3,17 @@ package fr.si5.cc.td1.files;
 public class File {
     private String userId;
     private String fileName;
-    private String BlobStoreId;
+    private String blobLink;
+    private String blobName;
 
     public File() {
     }
 
-    public File(String userId, String fileName, String blobStoreId) {
+    public File(String userId, String fileName, String blobLink, String blobName) {
         this.userId = userId;
         this.fileName = fileName;
-        BlobStoreId = blobStoreId;
+        this.blobLink = blobLink;
+        this.blobName = blobName;
     }
 
     public String getUserId() {
@@ -30,11 +32,19 @@ public class File {
         this.fileName = fileName;
     }
 
-    public String getBlobStoreId() {
-        return BlobStoreId;
+    public String getBlobLink() {
+        return blobLink;
     }
 
-    public void setBlobStoreId(String blobStoreId) {
-        BlobStoreId = blobStoreId;
+    public void setBlobLink(String blobLink) {
+        this.blobLink = blobLink;
+    }
+
+    public String getBlobName() {
+        return blobName;
+    }
+
+    public void setBlobName(String blobName) {
+        this.blobName = blobName;
     }
 }

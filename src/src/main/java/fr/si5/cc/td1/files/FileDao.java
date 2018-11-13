@@ -16,7 +16,8 @@ public class FileDao {
 
     public static final String USER_ID = "user_id";
     public static final String FILE_NAME = "file_name";
-    public static final String BLOB_STORE = "blob_store";
+    public static final String BLOB_LINK = "blob_link";
+    public static final String BLOB_NAME = "blob_name";
 
     private final String FILE = "file";
 
@@ -33,7 +34,8 @@ public class FileDao {
         Entity fileEntity = new Entity(FILE, userKey);
         fileEntity.setProperty(USER_ID, file.getUserId());
         fileEntity.setProperty(FILE_NAME, file.getFileName());
-        fileEntity.setProperty(BLOB_STORE, file.getBlobStoreId());
+        fileEntity.setProperty(BLOB_LINK, file.getBlobLink());
+        fileEntity.setProperty(BLOB_NAME, file.getBlobName());
 
         datastore.put(fileEntity);
         return fileEntity;
