@@ -58,4 +58,10 @@ public class UserDao {
         return null;
     }
 
+    public void clear() {
+        Query query = new Query(USER_KIND);
+        datastore.prepare(query).asList(FetchOptions.Builder.withDefaults())
+                .forEach(entity -> datastore.delete(entity.getKey()));
+    }
+
 }
