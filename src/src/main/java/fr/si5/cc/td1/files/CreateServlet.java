@@ -62,6 +62,7 @@ public class CreateServlet extends HttpServlet {
             }
             String link = this.uploadFile(filePart);
             fileDao.save(new File(user.getLogin(), filePart.getSubmittedFileName(), link));
+            user.addUpload(filePart.getSize());
             resp.sendRedirect("/");
         }
 

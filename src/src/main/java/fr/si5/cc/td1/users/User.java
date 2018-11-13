@@ -4,12 +4,13 @@ public class User {
 
     private String login;
     private String password;
-    private long    level;
-    private long    dataUploaded;
-    private long    currentUsage;
+    private long level;
+    private long dataUploaded;
+    private long currentUsage;
 
 
-    public User() {}
+    public User() {
+    }
 
     public User(String login, String password, long level, long dataUploaded, long currentUsage) {
         this.login = login;
@@ -60,4 +61,15 @@ public class User {
         this.currentUsage = currentUsage;
     }
 
+    public void addUpload(Long size) {
+        this.currentUsage += (size / 1000000);
+        if (currentUsage > 201) {
+            this.level = 2;
+            return;
+        }
+        if (currentUsage > 100) {
+            this.level = 1;
+            return;
+        }
+    }
 }
