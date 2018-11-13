@@ -41,6 +41,18 @@ public class FileDao {
         return fileEntity;
     }
 
+    public File findByFilename(String filename) {
+        List<File> files = findAll();
+        System.out.println("Number of file : " + files.size());
+        for (File file: files) {
+            System.out.println(file.getFileName());
+            if (file.getFileName().equals(filename)) {
+                return file;
+            }
+        }
+        return null;
+    }
+
     public List<File> findAll() {
         Query query = new Query(FILE);
         FileEntityTranslator translator = new FileEntityTranslator();
