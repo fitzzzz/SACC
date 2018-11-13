@@ -42,6 +42,24 @@ public class UserDao {
         return userEntity;
     }
 
+    public void updateUser(User user) {
+        Query query = new Query(USER_KIND);
+        List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+
+        for (Entity entity: entities) {
+            if ((entity.getProperty(LOGIN_FIELD)).equals(user.getLogin())) {
+                entity.setProperty(LOGIN_FIELD, user.getLogin());
+                entity.setProperty(PASSWORD_FIELD, user.getPassword());
+                entity.setProperty(LEVEL_FIELD, user.getLevel());
+                entity.setProperty(DATA_UPLOADED_FIELD, user.getDataUploaded());
+                entity.setProperty(CURRENT_USAGE_FIELD, user.getCurrentUsage());
+                datastore.put(entity);
+                return;
+            }
+        }
+    }
+
+
     public List<User> getUsers() {
         Query query = new Query(USER_KIND);
         UserEntityTranslator translator = new UserEntityTranslator();
