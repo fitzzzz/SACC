@@ -2,7 +2,10 @@ package fr.si5.cc.td1.files;
 
 import com.google.appengine.api.datastore.*;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static com.google.appengine.api.datastore.Query.*;
 
 
 public class FileDao {
@@ -40,6 +43,17 @@ public class FileDao {
         Query query = new Query(FILE);
         FileEntityTranslator translator = new FileEntityTranslator();
         return translator.translate(datastore.prepare(query).asList(FetchOptions.Builder.withDefaults()));
+    }
+
+    public File findByUserIdAndFileName(String userId, String fileName) {
+        Filter propertyFilter = new CompositeFilter(CompositeFilterOperator.AND,
+                Arrays.asList(new FilterPredicate(USER_ID, FilterOperator.EQUAL, userId),
+                        new FilterPredicate(FILE_NAME, FilterOperator.EQUAL, fileName))
+        );
+        Query query = new Query("Person").setFilter(propertyFilter);
+
+        FileEntityTranslator translator = new FileEntityTranslator();
+        return translator.translate(datastore.prepare(query).asSingleEntity());
     }
 
 }
