@@ -34,7 +34,7 @@ public class ClearServlet extends HttpServlet {
 
     private void clearFiles(PrintWriter writer) {
         List<String> blobNames = new ArrayList<>();
-        fileDao.findAll().forEach(file -> blobNames.add(file.getBlobStoreId()));
+        fileDao.findAll().forEach(file -> blobNames.add(file.getBlobName()));
         FileStorage.getInstance().clear(blobNames);
         writer.append("Files deleted.\n");
 
