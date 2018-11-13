@@ -56,4 +56,10 @@ public class FileDao {
         return translator.translate(datastore.prepare(query).asSingleEntity());
     }
 
+    public void clear() {
+        Query query = new Query(FILE);
+        datastore.prepare(query).asList(FetchOptions.Builder.withDefaults())
+                .forEach(entity -> datastore.delete(entity.getKey()));
+    }
+
 }
