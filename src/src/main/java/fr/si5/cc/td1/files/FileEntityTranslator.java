@@ -15,7 +15,8 @@ public class FileEntityTranslator {
     public File translate(Entity entity) {
         File file = new File();
         file.setUserId((String) entity.getProperty(FileDao.USER_ID));
-        file.setBlobStoreId((String) entity.getProperty(FileDao.BLOB_STORE));
+        file.setBlobLink((String) entity.getProperty(FileDao.BLOB_LINK));
+        file.setBlobName((String) entity.getProperty(FileDao.BLOB_NAME));
         file.setFileName((String) entity.getProperty(FileDao.FILE_NAME));
         return file;
     }
