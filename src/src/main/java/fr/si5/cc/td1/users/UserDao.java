@@ -1,6 +1,7 @@
 package fr.si5.cc.td1.users;
 
 import com.google.appengine.api.datastore.*;
+import fr.si5.cc.td1.utils.DataStoreFactory;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserDao {
     private final DatastoreService datastore;
 
     public UserDao() {
-        datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore = DataStoreFactory.constructConsistentDataStore();
     }
 
     public Entity persistUser(User user) {
