@@ -5,10 +5,7 @@ import org.joda.time.DateTime;
 
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +49,17 @@ public class FileStorage {
                         .build(),
                 filePart.getInputStream());
         // return the public download link
+    }
+
+
+    public BlobInfo createFakeFile(String fileName, int size) {
+        byte[] file = new byte[size];
+        return storage.create(
+                BlobInfo
+                        .newBuilder(FileStorage.BUCKET_NAME, fileName)
+                        // Modify access list to allow all users with link to read file
+                        .setAcl(new ArrayList<>(Arrays.asList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER))))
+                        .build(), file);
     }
 
     public void deleteFile(String blobName) {
