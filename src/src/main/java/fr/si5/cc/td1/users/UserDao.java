@@ -43,21 +43,28 @@ public class UserDao {
         return userEntity;
     }
 
-    public void updateUser(User user) {
+
+    public void updateEntity(User user) {
+        Entity userEntity = getUseEntityByLogin(user.getLogin());
+
+        userEntity.setProperty(LOGIN_FIELD, user.getLogin());
+        userEntity.setProperty(PASSWORD_FIELD, user.getPassword());
+        userEntity.setProperty(LEVEL_FIELD, user.getLevel());
+        userEntity.setProperty(DATA_UPLOADED_FIELD, user.getDataUploaded());
+        userEntity.setProperty(CURRENT_USAGE_FIELD, user.getCurrentUsage());
+        datastore.put(userEntity);
+    }
+    
+    private Entity getUseEntityByLogin(String login) {
         Query query = new Query(USER_KIND);
         List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 
-        for (Entity entity: entities) {
-            if ((entity.getProperty(LOGIN_FIELD)).equals(user.getLogin())) {
-                entity.setProperty(LOGIN_FIELD, user.getLogin());
-                entity.setProperty(PASSWORD_FIELD, user.getPassword());
-                entity.setProperty(LEVEL_FIELD, user.getLevel());
-                entity.setProperty(DATA_UPLOADED_FIELD, user.getDataUploaded());
-                entity.setProperty(CURRENT_USAGE_FIELD, user.getCurrentUsage());
-                datastore.put(entity);
-                return;
+        for (Entity entity : entities) {
+            if ((entity.getProperty(LOGIN_FIELD)).equals(login)) {
+                return entity;
             }
         }
+        return null;
     }
 
 
