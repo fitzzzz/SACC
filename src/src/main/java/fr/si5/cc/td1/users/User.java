@@ -77,7 +77,7 @@ public class User {
         return currentUsage;
     }
 
-    public long descrementCurrentUsage() {
+    public long decrementCurrentUsage() {
         currentUsage--;
         return currentUsage;
     }
