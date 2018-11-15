@@ -78,7 +78,8 @@ public class User {
     }
 
     public long decrementCurrentUsage() {
-        currentUsage--;
+        if (currentUsage != 0)
+            currentUsage--;
         return currentUsage;
     }
 

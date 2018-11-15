@@ -1,6 +1,7 @@
 package fr.si5.cc.td1.users;
 
 import com.google.appengine.api.taskqueue.DeferredTask;
+import fr.si5.cc.td1.download.DownloadController;
 
 public class DecrementUserCurrentUsageTask implements DeferredTask {
 
@@ -17,6 +18,8 @@ public class DecrementUserCurrentUsageTask implements DeferredTask {
         System.out.println("[DecrementUserCurrentUsageTask] user : " + userId
                 + "new current usage : " + userSynchronized.decrementCurrentUsage());
         userDao.updateEntity(userSynchronized);
+
+        new DownloadController().consumeDownloadQueue();
     }
 
 }
