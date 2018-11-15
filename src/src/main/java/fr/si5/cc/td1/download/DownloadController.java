@@ -2,21 +2,19 @@ package fr.si5.cc.td1.download;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskHandle;
 import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.repackaged.com.google.gson.Gson;
 import fr.si5.cc.td1.files.File;
-import fr.si5.cc.td1.users.DecrementUserCurrentUsageTask;
 import fr.si5.cc.td1.users.User;
-import fr.si5.cc.td1.users.UserDao;
 import fr.si5.cc.td1.users.UserLevel;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class DownloadController {
 
-    private final int NOOB_DOWNLOAD_LIMIT = 1;
-    private final int CASU_DOWNLOAD_LIMIT = 2;
-    private final int LEET_DOWNLAOD_LIMIT = 4;
-
-    private UserDao userDao = new UserDao();
 
 
     public String download(User user, File file) {
@@ -24,44 +22,38 @@ public class DownloadController {
             //case NOOB:
               //  return "Not implemented";
             case CASU:
-                return downloadCasu(user, file);
+                return downloadOther(user, file);
             case LEET:
-                return downloadLeet(user, file);
+                return downloadOther(user, file);
             default:
-                return downloadCasu(user, file);
+                return downloadOther(user, file);
                 //return "Unknown level";
         }
     }
 
-    private String downloadCasu(User user, File file) {
-        if (user.getCurrentUsage() < CASU_DOWNLOAD_LIMIT) {
-            return executeDownload(user, file);
-        } else {
-            return "Casu can't downlaod";
+    private String downloadOther(User user, File file) {
+        Queue q = QueueFactory.getQueue("download-casu-leet");
+
+        DownloadPayloadWrapper wrapper = new DownloadPayloadWrapper(user.getLogin(), file.getBlobLink());
+        String payload = new Gson().toJson(wrapper);
+        q.add(
+                TaskOptions.Builder.withMethod(TaskOptions.Method.PULL).payload(payload));
+
+        consumeDownloadQueue();
+        return "Demande de lien prise en compte";
+    }
+
+    public void consumeDownloadQueue() {
+        Queue q = QueueFactory.getQueue("download-casu-leet");
+        List<TaskHandle> tasks = q.leaseTasks(3600, TimeUnit.SECONDS, 1);
+        if (tasks.size() == 1) {
+            TaskHandle task = tasks.get(0);
+            String payload = new String(task.getPayload());
+            DownloadPayloadWrapper wrapper = new Gson().fromJson(payload, DownloadPayloadWrapper.class);
+            new DownloadPullQueueHandler().execute(wrapper.getMail(), wrapper.getBlobLink());
+            q.deleteTask(task);
         }
     }
 
-    private String downloadLeet(User user, File file) {
-        if (user.getCurrentUsage() < LEET_DOWNLAOD_LIMIT) {
-            return executeDownload(user, file);
-        } else {
-            return "LEET can't download";
-        }
-    }
-
-    private String executeDownload(User user, File file) {
-        User userSynchronized = userDao.getUserByLogin(user.getLogin());
-        userSynchronized.incrementCurrentUsage();
-        userDao.updateEntity(userSynchronized);
-        scheduleDecrementCurrentUsageTask(user);
-        return file.getBlobLink();
-    }
-
-    private void scheduleDecrementCurrentUsageTask(User user) {
-        Queue queue = QueueFactory.getDefaultQueue();
-        queue.add(
-                TaskOptions.Builder.withPayload(new DecrementUserCurrentUsageTask(user.getLogin()))
-                        .etaMillis(System.currentTimeMillis() + (1000 * 60)));
-    }
 
 }
