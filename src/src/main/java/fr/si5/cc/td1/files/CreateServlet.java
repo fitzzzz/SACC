@@ -1,6 +1,7 @@
 package fr.si5.cc.td1.files;
 
 import com.google.cloud.storage.BlobInfo;
+import fr.si5.cc.td1.mailer.Mailer;
 import fr.si5.cc.td1.users.User;
 import fr.si5.cc.td1.users.UserDao;
 
@@ -49,14 +50,17 @@ public class CreateServlet extends HttpServlet {
             } else {
                 FileStorage fileStorage = FileStorage.getInstance();
                 BlobInfo blobInfo = fileStorage.uploadFile(filePart);
-
-                fileDao.save(new File(user.getLogin(), filePart.getSubmittedFileName(), blobInfo.getMediaLink(), blobInfo.getName()));
-                fileStorage.deleteFileAfterDelay(blobInfo.getName(), CreateServlet.DELAY[(int) user.getLevel()]);
+                File file = new File(user.getLogin(), filePart.getSubmittedFileName(), blobInfo.getMediaLink(), blobInfo.getName());
+                fileDao.save(file);
+                DeleteFile.getInstance().deleteFileAfterDelay(file, CreateServlet.DELAY[(int) user.getLevel()]);
 
                 user.addUpload(filePart.getSize());
 
+                new Mailer().sendMail(user.getLogin(), "Polyshare - Share link",
+                        "Veuillez ajouter votre email à la fin du lien. \n" + "http://projet-sacc-si5.appspot.com/download?fileName=" + file.getFileName() +
+                                "&userMail=");
 
-                resp.getWriter().print("File uploaded:\"" + blobInfo.getName() + "\"\nAuthor : " + user.getLogin());
+                resp.getWriter().print("File uploaded:\"" + blobInfo.getName() + "\"\nA mail was send to the Author : " + user.getLogin());
             }
         }
 

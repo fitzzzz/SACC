@@ -5,23 +5,22 @@ import org.joda.time.DateTime;
 
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class FileStorage {
 
     private static FileStorage instance;
 
     private final Storage storage;
-    private final ScheduledExecutorService scheduler;
 
     private static final String BUCKET_NAME = "projet-sacc-bucket";
 
     private FileStorage() {
         storage = StorageOptions.getDefaultInstance().getService();
-        scheduler = Executors.newScheduledThreadPool(1);
     }
 
     public static FileStorage getInstance() {
@@ -72,21 +71,5 @@ public class FileStorage {
         blobsNames.forEach(this::deleteFile);
     }
 
-    public void deleteFileAfterDelay(String blodName, long delay) {
-        scheduler.schedule(new DeleteTask(blodName), delay, TimeUnit.MINUTES);
-    }
 
-    public class DeleteTask extends TimerTask {
-
-        private String blodName;
-
-        public DeleteTask(String blodName) {
-            this.blodName = blodName;
-        }
-
-        @Override
-        public void run() {
-            FileStorage.this.deleteFile(blodName);
-        }
-    }
 }
