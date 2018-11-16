@@ -44,7 +44,7 @@ public class FileDao {
     public File findByFilename(String filename) {
         List<File> files = findAll();
         System.out.println("Number of file : " + files.size());
-        for (File file: files) {
+        for (File file : files) {
             System.out.println(file.getFileName());
             if (file.getFileName().equals(filename)) {
                 return file;
@@ -75,5 +75,17 @@ public class FileDao {
         datastore.prepare(query).asList(FetchOptions.Builder.withDefaults())
                 .forEach(entity -> datastore.delete(entity.getKey()));
     }
+
+    public void delete(File file) {
+        Filter propertyFilter = new CompositeFilter(CompositeFilterOperator.AND,
+                Arrays.asList(new FilterPredicate(USER_ID, FilterOperator.EQUAL, userId),
+                        new FilterPredicate(FILE_NAME, FilterOperator.EQUAL, fileName))
+        );
+        Query query = new Query("Person").setFilter(propertyFilter);
+
+        FileEntityTranslator translator = new FileEntityTranslator();
+        datastore.delete(datastore.prepare(query).asSingleEntity().getKey());
+    }
+
 
 }
