@@ -19,8 +19,8 @@ public class DownloadController {
 
     public String download(User user, File file) {
         switch (UserLevel.values()[(int)user.getLevel()]) {
-            //case NOOB:
-              //  return "Not implemented";
+            case NOOB:
+               return downloadNoob(user, file);
             case CASU:
                 return downloadOther(user, file);
             case LEET:
@@ -29,6 +29,16 @@ public class DownloadController {
                 return downloadOther(user, file);
                 //return "Unknown level";
         }
+    }
+
+    private String downloadNoob(User user, File file) {
+        Queue queue = QueueFactory.getQueue("queue-noob");
+
+        queue.add(TaskOptions.Builder.withUrl("/noob/worker")
+                .param("user", user.getLogin())
+                .param("bloblink", file.getBlobLink()));
+
+        return "Demande de lien prise en compte";
     }
 
     private String downloadOther(User user, File file) {
