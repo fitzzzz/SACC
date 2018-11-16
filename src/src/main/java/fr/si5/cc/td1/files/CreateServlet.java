@@ -50,7 +50,7 @@ public class CreateServlet extends HttpServlet {
             } else {
                 FileStorage fileStorage = FileStorage.getInstance();
                 BlobInfo blobInfo = fileStorage.uploadFile(filePart);
-                File file = new File(user.getLogin(), filePart.getSubmittedFileName(), blobInfo.getMediaLink(), blobInfo.getName());
+                File file = new File(user.getLogin(), blobInfo.getName(), blobInfo.getMediaLink(), blobInfo.getName());
                 fileDao.save(file);
                 DeleteFile.getInstance().deleteFileAfterDelay(file, CreateServlet.DELAY[(int) user.getLevel()]);
 
