@@ -4,6 +4,7 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.repackaged.com.google.gson.Gson;
+import fr.si5.cc.td1.mailer.Mailer;
 import fr.si5.cc.td1.users.DecrementUserCurrentUsageTask;
 import fr.si5.cc.td1.users.User;
 import fr.si5.cc.td1.users.UserDao;
@@ -42,7 +43,7 @@ public class DownloadPullQueueHandler {
         user.incrementCurrentUsage();
         userDao.updateEntity(user);
         scheduleDecrementCurrentUsageTask(user);
-        System.out.println("Mail send : " + blobLink);
+        new Mailer().sendMail(user.getLogin(), "Polyshare - Download Link","Download link : " + blobLink);
     }
 
     private void scheduleDecrementCurrentUsageTask(User user) {
