@@ -1,6 +1,5 @@
 package fr.si5.cc.td1.download;
 
-import com.google.gson.Gson;
 import fr.si5.cc.td1.files.File;
 import fr.si5.cc.td1.files.FileDao;
 import fr.si5.cc.td1.users.User;
@@ -17,8 +16,10 @@ import java.io.IOException;
 public class DownloadServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DownloadRequest downloadRequest = new Gson().fromJson(req.getReader(), DownloadRequest.class);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String userMail = req.getParameter("userMail");
+        String fileName = req.getParameter("fileName");
+        DownloadRequest downloadRequest = new DownloadRequest(userMail, fileName);
 
         UserDao userDao = new UserDao();
         User user = userDao.getUserByLogin(downloadRequest.getUserMail());
@@ -35,8 +36,8 @@ public class DownloadServlet extends HttpServlet {
             String response = new DownloadController().download(user, file);
             resp.getWriter().print(response);
         }
-
     }
+
 
     private void sendFileNotFound(HttpServletResponse resp) throws IOException {
         resp.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
