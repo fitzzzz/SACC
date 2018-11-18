@@ -55,6 +55,7 @@ public class CreateServlet extends HttpServlet {
                 DeleteFile.getInstance().deleteFileAfterDelay(file, CreateServlet.DELAY[(int) user.getLevel()]);
 
                 user.addUpload(filePart.getSize());
+                userDao.updateEntity(user);
 
                 new Mailer().sendMail(user.getLogin(), "Polyshare - Share link",
                         "Veuillez ajouter votre email à la fin du lien. \n" + "http://projet-sacc-si5.appspot.com/download?fileName=" + file.getFileName() +
