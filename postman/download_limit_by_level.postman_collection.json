@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "deb68435-04ef-4173-bc0b-39fa9d81c1d6",
+		"name": "download_limit_by_level",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clear all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/clear",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_a_noob",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4e1ac01-3b87-4d1e-b48d-ba24465f98ce",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"projet.sacc.si5@gmail.com\",\n    \"password\": \"12345\",\n    \"level\": 0\n}"
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_file_noob",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%40gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/create",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/clear",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "casual_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c34a5914-14dc-45aa-b5cd-91a1d0bd1858",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n  \"login\" : \"projet.sacc.si5@gmail.com\",\n  \"password\" : \"123456\",\n  \"level\": 1,\n  \"dataUploaded\": 120\n}"
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_file_casual",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%40gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/create",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/clear",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "leet_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cafd0f59-17f0-4abd-8f9c-30c3e21081bf",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"projet.sacc.si5@gmail.com\",\n    \"password\": \"123456\",\n    \"level\": 2,\n    \"dataUploaded\": 1000\n}"
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_file_leet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%40gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/create",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "require_download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://projet-sacc-si5.appspot.com/download?userMail=projet.sacc.si5%40gmail.com&fileName=<file_name_received_by_email_and_encoded>",
+					"protocol": "https",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"download"
+					],
+					"query": [
+						{
+							"key": "userMail",
+							"value": "projet.sacc.si5%40gmail.com"
+						},
+						{
+							"key": "fileName",
+							"value": "<file_name_received_by_email_and_encoded>"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

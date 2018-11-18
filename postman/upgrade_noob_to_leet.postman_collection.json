@@ -1,0 +1,405 @@
+{
+	"info": {
+		"_postman_id": "29f54a99-2071-4d57-84b4-c0af2edb4296",
+		"name": "upgrade_noob_to_leet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clear all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/clear",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_a_noob",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4e1ac01-3b87-4d1e-b48d-ba24465f98ce",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"projet.sacc.si5+noob_1@gmail.com\",\n    \"password\": \"12345\",\n    \"level\": 0\n}"
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82c34902-e458-45b1-940d-443924669e7f",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"6 users were returned\", function () {",
+							"    pm.expect(pm.response.json()).to.have.lengthOf(6);",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":120,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":100,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":1000,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":31415,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_1@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_2@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_a_file_51_Mb 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/createFakeFile?size=51000000&fileName=file1&email=projet.sacc.si5%2Bnoob_1%40gmail.com",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"createFakeFile"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "51000000"
+						},
+						{
+							"key": "fileName",
+							"value": "file1"
+						},
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%2Bnoob_1%40gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_a_file_51_Mb 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/createFakeFile?size=51000000&fileName=file2&email=projet.sacc.si5%2Bnoob_1%40gmail.com",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"createFakeFile"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "51000000"
+						},
+						{
+							"key": "fileName",
+							"value": "file2"
+						},
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%2Bnoob_1%40gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82c34902-e458-45b1-940d-443924669e7f",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"6 users were returned\", function () {",
+							"    pm.expect(pm.response.json()).to.have.lengthOf(6);",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":120,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":100,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":1000,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":31415,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_1@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_2@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_a_file_51_Mb 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/createFakeFile?size=51000000&fileName=file3&email=projet.sacc.si5%2Bnoob_1%40gmail.com",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"createFakeFile"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "51000000"
+						},
+						{
+							"key": "fileName",
+							"value": "file3"
+						},
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%2Bnoob_1%40gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_a_file_51_Mb 4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/createFakeFile?size=51000000&fileName=file4&email=projet.sacc.si5%2Bnoob_1%40gmail.com",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"createFakeFile"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "51000000"
+						},
+						{
+							"key": "fileName",
+							"value": "file4"
+						},
+						{
+							"key": "email",
+							"value": "projet.sacc.si5%2Bnoob_1%40gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82c34902-e458-45b1-940d-443924669e7f",
+						"exec": [
+							"pm.test(\"response is ok\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"6 users were returned\", function () {",
+							"    pm.expect(pm.response.json()).to.have.lengthOf(6);",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":120,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+casual_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":1,\\\"dataUploaded\\\":100,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_1@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":1000,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+leet_2@gmail.com\\\",\\\"password\\\":\\\"123456\\\",\\\"level\\\":2,\\\"dataUploaded\\\":31415,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_1@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"    pm.expect(pm.response.text()).to.include(\"{\\\"login\\\":\\\"projet.sacc.si5+noob_2@gmail.com\\\",\\\"password\\\":\\\"12345\\\",\\\"level\\\":0,\\\"dataUploaded\\\":0,\\\"currentUsage\\\":0}\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://projet-sacc-si5.appspot.com/user",
+					"protocol": "http",
+					"host": [
+						"projet-sacc-si5",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
