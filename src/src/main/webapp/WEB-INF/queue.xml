@@ -4,4 +4,14 @@
         <name>queue-red</name>
         <rate>5/s</rate>
     </queue>
+
+    <queue>
+        <name>download-casu-leet</name>
+        <mode>pull</mode>
+    </queue>
+
+    <queue>
+        <name>queue-noob</name>
+        <rate>5/s</rate>
+    </queue>
 </queue-entries>
