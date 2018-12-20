@@ -4,7 +4,7 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskHandle;
 import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
 import fr.si5.cc.td1.files.File;
 import fr.si5.cc.td1.users.User;
 import fr.si5.cc.td1.users.UserLevel;
@@ -45,6 +45,7 @@ public class DownloadController {
         Queue q = QueueFactory.getQueue("download-casu-leet");
 
         DownloadPayloadWrapper wrapper = new DownloadPayloadWrapper(user.getLogin(), file.getBlobLink());
+
         String payload = new Gson().toJson(wrapper);
         q.add(
                 TaskOptions.Builder.withMethod(TaskOptions.Method.PULL).payload(payload));
